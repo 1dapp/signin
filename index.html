@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>BullRun Login</title>
+    <title>BullRun V3 Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/x-icon" href="https://bullrun.live/Content/Front-theme/theme-assets/images/ico/favicon.ico">
 
     <!--Google Fonts-->
@@ -37,393 +37,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <!--===============================================================================================-->
-    <script>
-var totalearned = 0;
-function getVariableData() {
-    // get variable values
-    myContractInstance.methods.pool1currUserID().call().then(function (result) {
-        $('.Pool1count').html(result);
-        $('.pool1_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool2currUserID().call().then(function (result) {
-        
-            $('.Pool2count').html(result);
-        $('.pool2_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool3currUserID().call().then(function (result) {
-       
-            $('.Pool3count').html(result);
-        $('.pool3_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool4currUserID().call().then(function (result) {
-       
-            $('.Pool4count').html(result);
-        $('.pool4_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result+ "</a>");
-    });
-
-
-
-    myContractInstance.methods.pool5currUserID().call().then(function (result) {
-       
-            $('.Pool5count').html(result);
-        $('.pool5_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool6currUserID().call().then(function (result) {
-        
-            $('.Pool6count').html(result);
-        $('.pool6_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool7currUserID().call().then(function (result) {
-      
-            $('.Pool7count').html(result);
-        $('.pool7_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool8currUserID().call().then(function (result) {
-       
-            $('.Pool8count').html(result);
-        $('.pool8_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool9currUserID().call().then(function (result) {
-       
-            $('.Pool9count').html(result);
-        $('.pool9_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-    myContractInstance.methods.pool10currUserID().call().then(function (result) {
-        
-            $('.Pool10count').html(result);
-        $('.pool10_current_address').html("<a href=https://etherscan.io/address/" + result + " target=_blank>" + result + "</a>");
-    });
-
-
-
-    myContractInstance.methods.currUserID().call().then(function (result) {
-    
-       
-            $('.TotalUsers').html(result);
-
-    });
-
-    myContractInstance.methods.users(account).call().then(function (result1) {
-        
-            $('.currentuseridlink').html("https://bullrun.live/User/signup?referralid=" + result1.id);
-
-            $('.currentuseridlinknew').html("https://link.trustwallet.com/open_url?coin_id=60&url=https://1dapp.github.io/signup?referralid=" + result1.id);
-
-
-
-            $('.currentuseridlink').val("https://bullrun.live/User/signup?referralid=" + result1.id);
-
-            $('.currentuseridlinknew').val("https://link.trustwallet.com/open_url?coin_id=60&url=https://1dapp.github.io/signup?referralid=" + result1.id);
-
-
-
-            $('.sharebutton').attr('data-url', "https://1dapp.github.io/signup?referralid=" + result1.id);
-            $('.currentuserid').html(result1.id);
-            $('.currentaddress').html(account);
-            $('.ethaddress').attr('href', 'https://etherscan.io/address/' + account);
-        
-    });
-
-    
-
-
-    if (account !== 'undefined') {
-        getReferralCommission();
-        getPoolPaymentReceived();
-
-   
-    }
-    
-
-
-    
-
     
     
-    DirectreferralCount();
-}
-
-
-
-
-function getReferralCommission() {
-    
-
-    var level1 = parseFloat(0.0075); var level2 = parseFloat(0.005); var level3 = parseFloat(0.0025); var level4 = parseFloat(0.000005);
-
-    var referraltotal = parseFloat(0);
-
-    var events = myContractInstance.getPastEvents('getMoneyForLevelEvent', { filter: { _user: account }, 'fromBlock': 0, 'toBlock': 'latest'}, function (error, log) {
-        
-        if (!error) {
-            $.each(log, function (key, value) {
-                var level = value.returnValues._level;
-
-                if (level == 1) {
-                    referraltotal = parseFloat(referraltotal) + parseFloat("0.01");
-
-                }
-                else if (level == 2) {
-
-                    referraltotal = parseFloat(referraltotal) + parseFloat("0.005");
-                }
-                else if (level == 3) {
-                    referraltotal = parseFloat(referraltotal) + parseFloat("0.0025");
-
-                }
-                else {
-
-                    referraltotal = parseFloat(referraltotal) + parseFloat("0.00025");
-
-                }
-
-                $('.totalreferral').html(Math.round(1000000 * (referraltotal)) / 1000000);
-            });
-           
-        }
-    });
-
-}
-
-
-function getPoolPaymentReceived() {
-    var pool1_price = 0.1;
-    var pool2_price = 0.2;
-    var pool3_price = 0.5;
-    var pool4_price = 1;
-    var pool5_price = 2;
-    var pool6_price = 5;
-    var pool7_price = 10;
-    var pool8_price = 20;
-    var pool9_price = 50;
-    var pool10_price = 100;
-
-    var referraltotal = parseFloat(0);
-
-    var events = myContractInstance.getPastEvents('getPoolPayment', {filter : { _receiver: account },  'fromBlock': 0, 'toBlock': 'latest'}, function (error, log) {
-
-        if (!error) {
-            $.each(log, function (key, value) {
-                var level = value.returnValues._level;
-
-                if (level == 1) {
-                    referraltotal = parseFloat(referraltotal) + pool1_price;
-                }
-                else if (level == 2) {
-                    referraltotal = parseFloat(referraltotal) + pool2_price;
-                }
-                else if (level == 3) {
-                    referraltotal = parseFloat(referraltotal) + pool3_price;
-                }
-                else if (level == 4) {
-                    referraltotal = parseFloat(referraltotal) + pool4_price;
-                }
-                else if (level == 5) {
-                    referraltotal = parseFloat(referraltotal) + pool5_price;
-                }
-                else if (level == 6) {
-                    referraltotal = parseFloat(referraltotal) + pool6_price;
-                }
-                else if (level == 7) {
-                    referraltotal = parseFloat(referraltotal) + pool7_price;
-                }
-                else if (level == 8) {
-                    referraltotal = parseFloat(referraltotal) + pool8_price;
-                }
-                else if (level == 9) {
-                    referraltotal = parseFloat(referraltotal) + pool9_price;
-                }
-                else if (level == 10) {
-                    referraltotal = parseFloat(referraltotal) + pool10_price;
-                }
-
-
-                $('.totalpoolpayment').html(Math.round(1000000 * (referraltotal)) / 1000000);
-            });
-        }
-    });
-    
-
-    
-}
-
-var templevel = 1, t = 1;
-var employees = {
-    accounting: []
-};
-var str = "";
-//'0x924a99087196F4B23e312aE6110218e54E0DBb51'
-function Directreferral() {
-    
-    var events = myContractInstance.getPastEvents('regLevelEvent', {filter:{ _referrer: account }, 'fromBlock': 0, 'toBlock': 'latest'}, function (error, log) {
-
-        if (!error) {
-
-            $.each(log, function (key, value) {
-                if (t == 1) {
-                    t = 2;
-                    $('#accordion11').html("");
-                    $('#accordion11').append('<div class="panel-heading1 bg-primary ">' +
-                        '<h4 class= "panel-title1">' +
-                        '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion11" href="#collapseFour11" aria-expanded="false"><i class="fe fe-arrow-right mr-2"></i>Level 1</a>' +
-                        '</h4 >' +
-                        '</div >' +
-                        '<div id="collapseFour11" class="panel-collapse collapse" role="tabpanel" aria-expanded="false">' +
-                        '<div class= "panel-body border" ></div></div></div>')
-                        ;
-
-                }
-                $('#collapseFour11 .panel-body').append('<p style=color:green>' + value.returnValues._user + '</p>');
-
-                employees.accounting.push({
-
-                    'address': value.returnValues._user,
-                    "level": 1
-
-                });
-
-                InDirectreferral(value.returnValues._user, 2)
-            });
-        }
-        else {
-
-            $('#accordion11').append('No data');
-                ;
-        }
-    });
-}
-
-
-function InDirectreferral(address, level) {
-    var events = myContractInstance.getPastEvents('regLevelEvent', {filter:{ _referrer: address },  'fromBlock': 0, 'toBlock': 'latest' }, function (error, log) {
-
-        if (!error) {
-            $.each(log, function (key, value) {
-                if (templevel != level) {
-                    str += '';
-                }
-                if (templevel != level) {
-                    templevel = level;
-                    $('#accordion11').append('<div class="panel-heading1 bg-primary ">' +
-                        '<h4 class= "panel-title1">' +
-                        '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1' + level + '" href="#collapseFour1' + level + '" aria-expanded="false"><i class="fe fe-arrow-right mr-2"></i>Level ' + level + '</a>' +
-                        '</h4 >' +
-                        '</div >' +
-                        '<div id="collapseFour1' + level + '" class="panel-collapse collapse" role="tabpanel" aria-expanded="false">' +
-                        '<div class= "panel-body border" ></div></div></div>')
-                        ;
-                }
-                $('#collapseFour1' + level + ' .panel-body').append('<p style=color:green>' + value.returnValues._user + '</p>');
-
-                employees.accounting.push({
-
-                    'address': value.returnValues._user,
-                    "level": level
-
-                });
-                InDirectreferral(value.returnValues._user, level + 1);
-            });
-        }
-    });
-}
-
-function DirectreferralCount() {
-    
-    var i = 1;
-    $('.referralcount').html(0);
-    $('.indirect_referralcount').html(0);
-    var events = myContractInstance.getPastEvents('regLevelEvent', {filter:{ _referrer: account },  'fromBlock': 0, 'toBlock': 'latest'}, function (error, log) {
-       
-        if (!error) {
-            $.each(log, function (key, value) {
-                $('.referralcount').html(i++);
-
-                InDirectreferralCount(value.returnValues._user, 1)
-            });
-        }
-        else {
-            $('.referralcount').html(0);
-            $('.indirect_referralcount').html(0);
-        }
-    });
-     
-}
-var count = 1;
-
-function InDirectreferralCount(address, level) {
-    
-    var events = myContractInstance.getPastEvents('regLevelEvent', {filter:{ _referrer: address },  'fromBlock': 0, 'toBlock': 'latest' }, function (error, log) {
-      
-        if (!error) {
-            $.each(log, function (key, value) {
-                $('.indirect_referralcount').html(count++);
-                InDirectreferralCount(value.returnValues._user, level + 1);
-            });
-        }
-        else {
-            $('.indirect_referralcount').html(0);
-        }
-    });
-
-}
-
-
-function Transaction_Register() {
-    
-    var events = myContractInstance.getPastEvents('getMoneyForLevelEvent', {filter:{ _user: account },  'fromBlock': 0, 'toBlock': 'latest'}, function (error, log) {
-        var level1 = parseFloat(0.01); var level2 = parseFloat(0.005); var level3 = parseFloat(0.0025); var level4 = parseFloat(0.00025);
-
-        if (!error) {
-            $.each(log, function (key, value) {
-                
-                $('.autopool_table').append('<tr><td><a href="https://etherscan.io/tx/' + value.transactionHash + '" target="_blank">' + value.transactionHash + '</a></td><td style=color:green>' + value.returnValues._referral + '</td><td>' + value.returnValues._level + '</td><td>' + (value.returnValues._level == 1 ? level1 : value.returnValues._level == 2 ? level2 : value.returnValues._level == 3 ? level3 : level4) + ' ETH</td></tr>');
-            });
-        }
-    });
-}
-
-
-function Transaction_Pool() {
-    var events = myContractInstance.getPastEvents('getPoolPayment', {filter:{ _receiver: account },  'fromBlock': 0, 'toBlock': 'latest' }, function (error, log) {
-        var pool1_price = 0.1;
-        var pool2_price = 0.2;
-        var pool3_price = 0.5;
-        var pool4_price = 1;
-        var pool5_price = 2;
-        var pool6_price = 5;
-        var pool7_price = 10;
-        var pool8_price = 20;
-        var pool9_price = 50;
-        var pool10_price = 100;
-
-        if (!error) {
-            $.each(log, function (key, value) {
-                $('.transaction_autopool').append('<tr><td><a href="https://etherscan.io/tx/' + value.transactionHash + '" target="_blank">' + value.transactionHash + '</a></td><td style=color:green>' + value.returnValues._user + '</td><td>' + value.returnValues._level + '</td><td>' + (value.returnValues._level == 1 ? pool1_price : value.returnValues._level == 2 ? pool2_price : value.returnValues._level == 3 ? pool3_price : value.returnValues._level == 4 ? pool4_price : value.returnValues._level == 5 ? pool5_price : value.returnValues._level == 6 ? pool6_price : value.returnValues._level == 7 ? pool7_price : value.returnValues._level == 8 ? pool8_price : value.returnValues._level == 9 ? pool9_price : pool10_price) + ' ETH</td></tr>');
-            });
-        }
-    });
-}
-        </script>
-    
-    
-    
-    
-    
-    
-    
-    
-    <script>
-var myContractInstance;
+    <script> 
+    var myContractInstance;
 var abi = [{"constant":false,"inputs":[],"name":"buyPool1","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool5currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool5users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool3userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool1userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool8userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool1activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool1users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool4","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool5activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool9currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool4userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool2activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool7","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool9userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool1currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool4activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool9users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool2","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool7currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool10currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool6users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool8","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getEthBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool3users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"LEVEL_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"unlimited_level_price","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool2userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool8activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool4users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool6userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"requests","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"referrerID","type":"uint256"},{"internalType":"uint256","name":"referredUsers","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool2users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool8currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool7users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool9activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_referrerID","type":"uint256"}],"name":"regUser","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"ownerWallet","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool7activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool10activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool4currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool8users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool9","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"referrerID","type":"uint256"},{"internalType":"uint256","name":"referredUsers","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool6","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool2currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool3","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool3currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool5userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool7userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pool10userList","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pool3activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool10","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool6currUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"pool10users","outputs":[{"internalType":"bool","name":"isExist","type":"bool"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"payment_received","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buyPool5","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"pool6activeUserID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_user","type":"address"},{"indexed":true,"internalType":"address","name":"_referrer","type":"address"},{"indexed":false,"internalType":"uint256","name":"_time","type":"uint256"}],"name":"regLevelEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_user","type":"address"},{"indexed":true,"internalType":"address","name":"_referral","type":"address"},{"indexed":false,"internalType":"uint256","name":"_level","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_time","type":"uint256"}],"name":"getMoneyForLevelEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_user","type":"address"},{"indexed":false,"internalType":"uint256","name":"_level","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_time","type":"uint256"}],"name":"regPoolEntry","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_user","type":"address"},{"indexed":true,"internalType":"address","name":"_receiver","type":"address"},{"indexed":false,"internalType":"uint256","name":"_level","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_time","type":"uint256"}],"name":"getPoolPayment","type":"event"}];
-var address = "0x924a99087196F4B23e312aE6110218e54E0DBb519";
+var address = "0x924a99087196F4B23e312aE6110218e54E0DBb51";
 var account = "";
 
    
@@ -502,7 +121,7 @@ function SigninPage(){
     //            setTimeout(function () {
     //                var time = "2 minutes ago";
     //                $.notify({
-    //                    icon: 'https://bullrun.live//Content/assets/img/b1.png',
+    //                    icon: 'https://bullrun.live/Content/assets/img/b1.png',
     //                    title: "Congragulations! New User " + event.args._user + " Registered ",
     //                    message: "Welcome to BullRun V3"
     //                }, {
@@ -726,11 +345,10 @@ $(document).ready(function () {
 
 
 })
-</script>
-
+    </script>
     <script>
         $(document).ready(function () {
-            Signinpage()
+            SigninPage()
         })
 
     </script>
@@ -744,6 +362,10 @@ $(document).ready(function () {
             });
         });
     </script>
+    
+    
+    
+    
 </head>
 <body>
 
@@ -776,7 +398,7 @@ $(document).ready(function () {
                         </div>
 
                         <div class="container-login100-form-btn m-t-5">
-                            <button class="btn btn-info w-100 lauto dis-none" id="lgambtn" style="display:1">
+                            <button class="btn btn-info w-100 lauto dis-none" id="lgambtn" style="display:none">
                                 Sign In  Automatically
                             </button>
                         </div>
@@ -796,14 +418,14 @@ $(document).ready(function () {
                             <p class="text-white col-lg-12">Social Links</p>
                             <div class="socialjs col-lg-12 m-t-10">
 
-                                <a class="sharebutton facebook btn " target="_blank" style="background-color:#3b5998;color:white" href="https://www.facebook.com"><i class=" fa fa-facebook"></i></a>
+                                <a class="sharebutton facebook btn " target="_blank" style="background-color:#3b5998;color:white" href="https://www.facebook.com/bullrun.live"><i class=" fa fa-facebook"></i></a>
 
-                                <a class="sharebutton twitter btn" target="_blank" style="background-color:#00acee;color:white" href="https://twitter.com"><i class=" fa fa-twitter"></i> </a>
+                                <a class="sharebutton twitter btn" target="_blank" style="background-color:#00acee;color:white" href="https://twitter.com/BULLRUNLIVE"><i class=" fa fa-twitter"></i> </a>
                                 <a class="sharebutton linkedin btn" target="_blank" style="background-color:#0e76a8;color:white" href="#"><i class=" fa fa-linkedin"></i> </a>
 
-                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#0088cc;color:white" href="https://t.me/BullRunV3"><i class="fa fa-telegram"></i> </a>
-                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#ff0000;color:white" href="https://youtube.com"><i class="fa fa-youtube"></i> </a>
-                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#dd2a7b ;color:white" href="http://instagram.com"><i class="fa fa-instagram"></i> </a>
+                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#0088cc;color:white" href="https://t.me/BullRunlive"><i class="fa fa-telegram"></i> </a>
+                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#ff0000;color:white" href="#"><i class="fa fa-youtube"></i> </a>
+                                <a class="sharebutton telegram btn" target="_blank" style="background-color:#dd2a7b ;color:white" href="http://instagram.com/bullrunlive"><i class="fa fa-instagram"></i> </a>
                             </div>
                         </div>
                     </div>
@@ -813,7 +435,7 @@ $(document).ready(function () {
                 </div> 
                 <div class="login100-more ">
                     <div class="col-lg-12 m-t-30">
-                        <a href="/"> <img src="https://bullrun.live/Content/Front-theme/theme-assets/images/bullrunlogo1.png" style="" class="w-100" /></a>
+                        <a href="https://1dapp.github.io"> <img src="https://bullrun.live/Content/Front-theme/theme-assets/images/bullrunlogo1.png" style="" class="w-100" /></a>
                     </div>
                     <div class="w-100 m-t-100 m-l-auto m-r-auto text-center download-buttons">
                         <a href="https://metamask.io/" target="_blank" class="m-b-5 btn btn-success" style="background-color:#062d54;border-color:#062d54">Download Metamask</a>
@@ -824,9 +446,13 @@ $(document).ready(function () {
         </div>
     </div>
 
-<div id="dropDownSelect1"></div>
-    
-    
+
+
+    <div id="dropDownSelect1"></div>
+
+
 
 </body>
 </html>
+
+
